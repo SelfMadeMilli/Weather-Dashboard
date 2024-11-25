@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Flexbox container for left and right sections */
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+/* Left section for search form and search history */
+.left-section {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-section h2, .left-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Input and button styles */
+input#city-input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Search history styles */
+#search-history {
+    list-style: none;
+    padding-left: 0;
+}
+
+#search-history li {
+    cursor: pointer;
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Right section for weather display */
+.right-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Current weather card */
+.weather-card {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.weather-card h2, .weather-card p {
+    margin: 5px 0;
+}
+
+/* 5 Day Forecast section */
+#forecast {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.forecast-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.forecast-item {
+    flex: 1;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.forecast-item img {
+    display: block;
+    margin: 0 auto;
+} 
