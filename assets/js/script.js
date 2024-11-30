@@ -2,14 +2,16 @@
 // Signup link: https://home.openweathermap.org/users/sign_up
 // Signin link: https://home.openweathermap.org/users/sign_in
 // TODO: Replace 'YOUR_API_KEY' with your actual API key
-const API_KEY = 'YOUR_API_KEY'; 
+const API_KEY = '83f3478b87125d27cc16a6b7eb7b823a'; 
 
 // Get references to necessary DOM elements (e.g., search input, buttons, weather display areas)
 // TODO: Replace the 'INSERT_ID_HERE' with the appropriate selector for the DOM elements below
-const searchBtn = document.getElementById('INSERT_ID_HERE');
-const cityInput = document.getElementById('INSERT_ID_HERE');
-const currentWeatherDisplay = document.getElementById('INSERT_ID_HERE');
-const forecastDisplay = document.getElementById('INSERT_ID_HERE');
+const searchBtn = document.getElementById('search-Btn');
+const cityInput = document.getElementById('city-input');
+const currentWeatherDisplay = document.getElementById('get-weather');.addEventListener('click', function() {
+    const city = document.getElementById('city-input').value;
+    const apiKey = '83f3478b87125d27cc16a6b7eb7b823a'; 
+const forecastDisplay = document.getElementById('forcast-display');
 const searchHistory = document.getElementById('search-history');
 
 // Fetch the coordinates (latitude and longitude) of a city using the OpenWeatherMap Geocoding API
@@ -18,33 +20,43 @@ function getCoordinates(cityName) {
     const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
     return fetch(geoUrl)
         // TODO: Convert the API response from a raw format (such as text or blob) into a JavaScript object using the .json() method.
-        .then()
+        .then(response => response.json())
         .then(data => {
-            console.log('API Response:', data);
-            if (data.length === 0) {
-                throw new Error('City not found');
-            }
-            return {
+            const lat = data.coord.lat;
+            const lon = data.coord.lon;
+            // Now fetch the 5-day weather forecast using the coordinates
+            return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+        })
+        .then(response => response.json())
+        .then(forecastData => {
+            // Process and display the forecast data
+            document.getElementById('weather-results').innerHTML = JSON.stringify(forecastData);
+        })
+        .catch(error => console.error('Error:', error));
+});
                 // TODO: Extract the latitude and longitude from the first result in the returned data array (check console).
                 lat:
                 lon: 
             };
         })
         // TODO: Handle any errors that occur during the API request or response parsing.
-        .catch();
+        .catch;
 }
 
 // Fetch the weather data using the coordinates
 // TODO: Complete the getWeather method by filling in the .then(s)
 function getWeather(lat, lon) {
     const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-    return fetch(weatherUrl)
-        // TODO: Convert the API response into a JSON object using .json() to allow handling of the data in JavaScript.
-        .then()
-        // TODO: Return the parsed data in the second .then() so that it can be used in the next steps of the promise chain for further processing.
-        .then();
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
+    // TODO: Convert the API response into a JSON object using .json() to allow handling of the data in JavaScript.
+    .then(response => response.json())
+      // TODO: Return the parsed data in the second .then() so that it can be used in the next steps of the promise chain for further processing.
+    .then(data => {
+        const lat = data.coord.lat;
+        const lon = data.coord.lon;
+     
+     
 }
-
 // Display the current weather data
 // TODO: Use the 'Current Weather Data' in the console to complete the displayCurrentWeather method
 function displayCurrentWeather(data) {
@@ -67,6 +79,17 @@ function displayCurrentWeather(data) {
 }
 
 // Display the 5-day weather forecast
+// Now fetch the 5-day weather forecast using the coordinates
+return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+})
+.then(response => response.json())
+.then(forecastData => {
+    // Process and display the forecast data
+    document.getElementById('weather-results').innerHTML = JSON.stringify(forecastData);
+})
+.catch(error => console.error('Error:', error));
+});
+
 // TODO: Use the '5-day Weather Data' in the console to complete the displayForecast method
 function displayForecast(data) {
     console.log('5-day Weather Data', data);
@@ -93,7 +116,9 @@ function displayForecast(data) {
 
 // Update and store search history in localStorage
 function updateSearchHistory(city) {
+    localStorage.setItem('lastSearchedCity', city);
     let history = JSON.parse(localStorage.getItem('history')) || [];
+   
     // TODO: Check if the city already exists in the search history
     // If the city does not exist, add it to the history array, 
     // then update the localStorage with the new history and re-render the search history.
